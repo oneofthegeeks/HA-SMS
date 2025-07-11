@@ -1,0 +1,260 @@
+# Example Automations for SMS GoTo Integration
+# Copy these automations to your Home Assistant configuration
+
+# Send SMS when motion is detected
+- alias: "Motion Detection SMS Alert"
+  description: "Send SMS when motion is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_detector
+    to: "on"
+  condition:
+    # Only send during certain hours (optional)
+    - condition: time
+      after: "06:00:00"
+      before: "22:00:00"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "Motion detected in your home at {{ now().strftime('%H:%M') }}"
+
+# Send SMS when door is opened
+- alias: "Door Open SMS Alert"
+  description: "Send SMS when front door is opened"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.front_door
+    to: "on"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "Front door has been opened!"
+
+# Send SMS when temperature is too high
+- alias: "High Temperature Alert"
+  description: "Send SMS when temperature exceeds threshold"
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.living_room_temperature
+    above: 80
+  condition:
+    # Only send if temperature has been high for 5 minutes
+    - condition: numeric_state
+      entity_id: sensor.living_room_temperature
+      above: 80
+      for:
+        minutes: 5
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "Temperature alert: {{ states('sensor.living_room_temperature') }}°F in living room"
+
+# Send SMS when smoke detector goes off
+- alias: "Smoke Detector Alert"
+  description: "Send urgent SMS when smoke detector is triggered"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.smoke_detector
+    to: "on"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "🚨 SMOKE DETECTOR ALARM - Check your home immediately!"
+
+# Send SMS when water leak is detected
+- alias: "Water Leak Alert"
+  description: "Send SMS when water leak sensor is triggered"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.water_leak_detector
+    to: "on"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "💧 Water leak detected! Check your home immediately."
+
+# Send SMS when garage door is left open
+- alias: "Garage Door Left Open"
+  description: "Send SMS if garage door is open for too long"
+  trigger:
+    platform: state
+    entity_id: cover.garage_door
+    to: "open"
+    for:
+      minutes: 10
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "Garage door has been open for 10 minutes. Please check."
+
+# Send SMS when someone arrives home
+- alias: "Arrival Notification"
+  description: "Send welcome SMS when someone arrives home"
+  trigger:
+    platform: state
+    entity_id: device_tracker.person_1
+    to: "home"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "🏠 Welcome home! Your smart home is ready."
+
+# Send SMS when someone leaves home
+- alias: "Departure Notification"
+  description: "Send SMS when someone leaves home"
+  trigger:
+    platform: state
+    entity_id: device_tracker.person_1
+    from: "home"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "You've left home. Security system is active."
+
+# Send SMS when battery is low
+- alias: "Low Battery Alert"
+  description: "Send SMS when sensor battery is low"
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.sensor_battery
+    below: 20
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "🔋 Low battery alert: {{ states('sensor.sensor_battery') }}% remaining"
+
+# Send SMS when internet goes down
+- alias: "Internet Down Alert"
+  description: "Send SMS when internet connection is lost"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.internet_connected
+    to: "off"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "🌐 Internet connection lost. Check your network."
+
+# Send SMS when security system is armed/disarmed
+- alias: "Security System Status"
+  description: "Send SMS when security system status changes"
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.security_system
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "Security system is now {{ states('alarm_control_panel.security_system') }}"
+
+# Send SMS when camera detects person
+- alias: "Person Detection Alert"
+  description: "Send SMS when camera detects a person"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.camera_person_detection
+    to: "on"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "👤 Person detected by camera at {{ now().strftime('%H:%M') }}"
+
+# Send SMS when HVAC system turns on
+- alias: "HVAC Activation Alert"
+  description: "Send SMS when HVAC system activates"
+  trigger:
+    platform: state
+    entity_id: climate.hvac_system
+    to: "heat"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "🔥 HVAC heating system activated"
+
+# Send SMS when lights are left on
+- alias: "Lights Left On Alert"
+  description: "Send SMS if lights are left on for too long"
+  trigger:
+    platform: state
+    entity_id: light.living_room_lights
+    to: "on"
+    for:
+      hours: 2
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "💡 Living room lights have been on for 2 hours"
+
+# Send SMS when washer/dryer cycle completes
+- alias: "Laundry Complete Alert"
+  description: "Send SMS when laundry cycle is complete"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.washer
+    to: "off"
+  condition:
+    # Only send if washer was running
+    - condition: state
+      entity_id: binary_sensor.washer
+      state: "off"
+      for:
+        minutes: 1
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "👕 Laundry cycle is complete!"
+
+# Send SMS when package is delivered (if you have a package sensor)
+- alias: "Package Delivery Alert"
+  description: "Send SMS when package is delivered"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.package_delivery
+    to: "on"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "📦 Package delivered to your doorstep!"
+
+# Send SMS when sump pump activates
+- alias: "Sump Pump Alert"
+  description: "Send SMS when sump pump activates"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.sump_pump
+    to: "on"
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "💧 Sump pump has activated - check for water issues"
+
+# Send SMS when refrigerator door is left open
+- alias: "Refrigerator Door Alert"
+  description: "Send SMS if refrigerator door is open too long"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.refrigerator_door
+    to: "on"
+    for:
+      minutes: 5
+  action:
+    service: sms_goto.send_sms
+    data:
+      to: "+1234567890"
+      message: "❄️ Refrigerator door has been open for 5 minutes" 

@@ -1,0 +1,19 @@
+send_sms:
+  name: Send SMS
+  description: Send an SMS message via GoTo
+  fields:
+    to:
+      name: To Number
+      description: The phone number to send the SMS to
+      required: true
+      example: "+1234567890"
+    message:
+      name: Message
+      description: The SMS message content
+      required: true
+      example: "Hello from Home Assistant!"
+    from_number:
+      name: From Number
+      description: The phone number to send the SMS from (optional)
+      required: false
+      example: "+1234567890" 

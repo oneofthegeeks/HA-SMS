@@ -1,0 +1,172 @@
+# Example Home Assistant configuration for SMS GoTo integration
+
+# Configuration for SMS GoTo integration
+sms_goto:
+  api_key: "your_goto_api_key_here"
+  api_secret: "your_goto_api_secret_here"
+  account_sid: "your_goto_account_sid_here"
+
+# Example automations using SMS GoTo
+automation:
+  # Send SMS when motion is detected
+  - alias: "Motion Detection SMS Alert"
+    trigger:
+      platform: state
+      entity_id: binary_sensor.motion_detector
+      to: "on"
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "Motion detected in your home at {{ now().strftime('%H:%M') }}"
+
+  # Send SMS when door is opened
+  - alias: "Door Open SMS Alert"
+    trigger:
+      platform: state
+      entity_id: binary_sensor.front_door
+      to: "on"
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "Front door has been opened!"
+
+  # Send SMS when temperature is too high
+  - alias: "High Temperature Alert"
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.living_room_temperature
+      above: 80
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "Temperature alert: {{ states('sensor.living_room_temperature') }}°F in living room"
+
+  # Send SMS when smoke detector goes off
+  - alias: "Smoke Detector Alert"
+    trigger:
+      platform: state
+      entity_id: binary_sensor.smoke_detector
+      to: "on"
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "SMOKE DETECTOR ALARM - Check your home immediately!"
+
+  # Send SMS when water leak is detected
+  - alias: "Water Leak Alert"
+    trigger:
+      platform: state
+      entity_id: binary_sensor.water_leak_detector
+      to: "on"
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "Water leak detected! Check your home immediately."
+
+  # Send SMS when garage door is left open
+  - alias: "Garage Door Left Open"
+    trigger:
+      platform: state
+      entity_id: cover.garage_door
+      to: "open"
+      for:
+        minutes: 10
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "Garage door has been open for 10 minutes. Please check."
+
+  # Send SMS when someone arrives home
+  - alias: "Arrival Notification"
+    trigger:
+      platform: state
+      entity_id: device_tracker.person_1
+      to: "home"
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "Welcome home! Your smart home is ready."
+
+  # Send SMS when someone leaves home
+  - alias: "Departure Notification"
+    trigger:
+      platform: state
+      entity_id: device_tracker.person_1
+      from: "home"
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "You've left home. Security system is active."
+
+  # Send SMS when battery is low
+  - alias: "Low Battery Alert"
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.sensor_battery
+      below: 20
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "Low battery alert: {{ states('sensor.sensor_battery') }}% remaining"
+
+  # Send SMS when internet goes down
+  - alias: "Internet Down Alert"
+    trigger:
+      platform: state
+      entity_id: binary_sensor.internet_connected
+      to: "off"
+    action:
+      service: sms_goto.send_sms
+      data:
+        to: "+1234567890"
+        message: "Internet connection lost. Check your network."
+
+# Example scripts using SMS GoTo
+script:
+  send_test_sms:
+    alias: "Send Test SMS"
+    sequence:
+      - service: sms_goto.send_sms
+        data:
+          to: "+1234567890"
+          message: "This is a test SMS from Home Assistant!"
+
+  send_weather_update:
+    alias: "Send Weather Update"
+    sequence:
+      - service: sms_goto.send_sms
+        data:
+          to: "+1234567890"
+          message: >
+            Weather Update: {{ states('sensor.weather_temperature') }}°F, 
+            {{ states('sensor.weather_condition') }}
+
+  send_daily_summary:
+    alias: "Send Daily Summary"
+    sequence:
+      - service: sms_goto.send_sms
+        data:
+          to: "+1234567890"
+          message: >
+            Daily Summary: 
+            Temperature: {{ states('sensor.living_room_temperature') }}°F
+            Humidity: {{ states('sensor.living_room_humidity') }}%
+            Motion events: {{ states('sensor.motion_events_today') }}
+
+# Example notify configuration
+notify:
+  - platform: sms_goto
+    name: sms_goto
+
+# Example logger configuration for debugging
+logger:
+  custom_components.sms_goto: debug 
