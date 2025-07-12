@@ -1,1 +1,0 @@
-"""SMS GoTo Home Assistant Integration Package.""" 
