@@ -6,16 +6,25 @@
                     "name": "Integration Name",
                     "api_key": "API Key (Client ID)",
                     "api_secret": "API Secret (Client Secret)",
-                    "account_sid": "Account SID (Optional - from developer.goto.com)"
+                    "account_sid": "Account SID (Optional)"
                 },
-                "description": "Enter your GoTo SMS API credentials to enable SMS notifications in Home Assistant.\n\n**Required:**\n- API Key (Client ID) from developer.goto.com\n- API Secret (Client Secret) from developer.goto.com\n\n**Optional:**\n- Account SID (Account Key from developer.goto.com)\n\n**Need help?** Check the [documentation]({docs_url}) or [setup guide]({setup_url}).",
+                "description": "Enter your GoTo API credentials. You'll be guided through the OAuth setup process.",
                 "title": "SMS GoTo Configuration"
+            },
+            "oauth_setup": {
+                "data": {
+                    "auth_code": "Authorization Code"
+                },
+                "description": "Complete the OAuth flow to authenticate with GoTo",
+                "title": "OAuth Setup"
             }
         },
         "error": {
             "cannot_connect": "Failed to connect to GoTo API. Please check your credentials and try again.",
             "invalid_auth": "Invalid authentication credentials. Please verify your API Key, API Secret, and Account SID.",
-            "unknown": "Unexpected error occurred. Please check the logs for more details."
+            "unknown": "Unexpected error occurred. Please check the logs for more details.",
+            "oauth_failed": "OAuth authentication failed. Please check your authorization code and try again.",
+            "token_save_failed": "Failed to save authentication tokens. Please try again."
         },
         "abort": {
             "already_configured": "SMS GoTo is already configured. You can only have one instance."
