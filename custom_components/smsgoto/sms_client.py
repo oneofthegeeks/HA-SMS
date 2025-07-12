@@ -20,7 +20,7 @@ GOTO_USER_INFO_URL = "https://api.goto.com/rest/users/v1/users/me"
 class EmbeddedGoToAuth:
     """Embedded GoTo Authentication client with OAuth2 flow and token refresh."""
     
-    def __init__(self, client_id: str, client_secret: str, redirect_uri: str = "http://localhost:8123/auth/external/callback"):
+    def __init__(self, client_id: str, client_secret: str, redirect_uri: str = "https://ha.brinton.xyz/auth/external/callback"):
         """Initialize the embedded auth client."""
         self.client_id = client_id
         self.client_secret = client_secret
