@@ -3,5 +3,6 @@
     "render_readme": true,
     "domains": ["notify", "smsgoto"],
     "homeassistant": "2023.8.0",
-    "iot_class": "Cloud Polling"
+    "iot_class": "Cloud Polling",
+    "persistent_directory": "custom_components/smsgoto"
 } 
