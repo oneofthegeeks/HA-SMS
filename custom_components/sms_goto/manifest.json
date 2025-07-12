@@ -1,9 +1,9 @@
 {
     "domain": "sms_goto",
     "name": "SMS GoTo",
-    "documentation": "https://github.com/oneofthegeeks/GoTo-Authentication",
+    "documentation": "https://github.com/oneofthegeeks/HA-SMS",
     "dependencies": [],
-    "codeowners": ["@your_username"],
+    "codeowners": ["@oneofthegeeks"],
     "requirements": ["aiohttp>=3.8.0"],
     "version": "1.0.0",
     "config_flow": true,

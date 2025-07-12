@@ -223,7 +223,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 For support and questions:
 
 1. Check the [Home Assistant Community](https://community.home-assistant.io/)
-2. Open an issue on GitHub
+2. Open an issue on [GitHub](https://github.com/oneofthegeeks/HA-SMS)
 3. Check the [GoTo Authentication Documentation](https://github.com/oneofthegeeks/GoTo-Authentication)
 
 ## Changelog
@@ -233,4 +233,13 @@ For support and questions:
 - SMS sending functionality using GoTo Authentication package from GitHub
 - Notify platform integration
 - Config flow support
-- Phone number validation 
+- Phone number validation
+
+## Author
+
+Created by **Taylor Brinton** ([@oneofthegeeks](https://github.com/oneofthegeeks))
+
+## Acknowledgments
+
+- [GoTo Authentication](https://github.com/oneofthegeeks/GoTo-Authentication) for providing the authentication library
+- Home Assistant community for the excellent platform 

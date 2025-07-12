@@ -14,12 +14,12 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 setup(
     name="sms-goto-ha",
     version="1.0.0",
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="Taylor Brinton",
+    author_email="taylor@brinton.xyz",
     description="SMS GoTo integration for Home Assistant",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/sms-goto-ha",
+    url="https://github.com/oneofthegeeks/HA-SMS",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
