@@ -43,6 +43,8 @@ class SMSGoToConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     )
                 else:
                     errors["base"] = "cannot_connect"
+            except ImportError:
+                errors["base"] = "missing_dependency"
             except Exception:  # pylint: disable=broad-except
                 _LOGGER.exception("Unexpected exception")
                 errors["base"] = "unknown"
@@ -52,12 +54,16 @@ class SMSGoToConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema(
                 {
                     vol.Required(CONF_NAME, default="SMS GoTo"): str,
-                    vol.Required(CONF_API_KEY): str,
-                    vol.Required(CONF_API_SECRET): str,
-                    vol.Required(CONF_ACCOUNT_SID): str,
+                    vol.Required(CONF_API_KEY, description="Your GoTo API Key (Client ID)"): str,
+                    vol.Required(CONF_API_SECRET, description="Your GoTo API Secret (Client Secret)"): str,
+                    vol.Required(CONF_ACCOUNT_SID, description="Your GoTo Account SID"): str,
                 }
             ),
             errors=errors,
+            description_placeholders={
+                "docs_url": "https://github.com/oneofthegeeks/GoTo-Authentication",
+                "setup_url": "https://github.com/oneofthegeeks/HA-SMS"
+            },
         )
 
     async def async_step_import(self, import_info: Dict[str, Any]) -> FlowResult:
@@ -70,4 +76,8 @@ class CannotConnect(HomeAssistantError):
 
 
 class InvalidAuth(HomeAssistantError):
-    """Error to indicate there is invalid auth.""" 
+    """Error to indicate there is invalid auth."""
+
+
+class MissingDependency(HomeAssistantError):
+    """Error to indicate missing dependency.""" 

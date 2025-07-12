@@ -4,21 +4,22 @@
             "user": {
                 "data": {
                     "name": "Integration Name",
-                    "api_key": "API Key",
-                    "api_secret": "API Secret",
+                    "api_key": "API Key (Client ID)",
+                    "api_secret": "API Secret (Client Secret)",
                     "account_sid": "Account SID"
                 },
-                "description": "Enter your GoTo SMS API credentials to enable SMS notifications in Home Assistant.",
+                "description": "Enter your GoTo SMS API credentials to enable SMS notifications in Home Assistant.\n\n**Prerequisites:**\n- GoTo account with SMS capabilities\n- API credentials from your GoTo developer portal\n- GoTo Authentication package installed\n\n**Need help?** Check the [documentation]({docs_url}) or [setup guide]({setup_url}).",
                 "title": "SMS GoTo Configuration"
             }
         },
         "error": {
-            "cannot_connect": "Failed to connect to GoTo API. Please check your credentials.",
-            "invalid_auth": "Invalid authentication credentials.",
-            "unknown": "Unexpected error occurred."
+            "cannot_connect": "Failed to connect to GoTo API. Please check your credentials and ensure the GoTo Authentication package is installed.",
+            "invalid_auth": "Invalid authentication credentials. Please verify your API Key, API Secret, and Account SID.",
+            "unknown": "Unexpected error occurred. Please check the logs for more details.",
+            "missing_dependency": "GoTo Authentication package not found. Please install it first: pip install git+https://github.com/oneofthegeeks/GoTo-Authentication.git"
         },
         "abort": {
-            "already_configured": "Device is already configured"
+            "already_configured": "SMS GoTo is already configured. You can only have one instance."
         }
     },
     "options": {

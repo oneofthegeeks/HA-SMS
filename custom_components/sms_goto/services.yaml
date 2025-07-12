@@ -1,19 +1,28 @@
 send_sms:
   name: Send SMS
-  description: Send an SMS message via GoTo
+  description: Send an SMS message via GoTo SMS API
   fields:
     to:
       name: To Number
-      description: The phone number to send the SMS to
+      description: The phone number to send the SMS to (include country code)
       required: true
       example: "+1234567890"
+      selector:
+        text:
+          type: phone
     message:
       name: Message
-      description: The SMS message content
+      description: The SMS message content (160 characters max for single SMS)
       required: true
       example: "Hello from Home Assistant!"
+      selector:
+        text:
+          multiline: true
     from_number:
       name: From Number
-      description: The phone number to send the SMS from (optional)
+      description: The phone number to send the SMS from (optional, uses default if not specified)
       required: false
-      example: "+1234567890" 
+      example: "+1987654321"
+      selector:
+        text:
+          type: phone 

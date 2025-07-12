@@ -13,7 +13,7 @@ This custom integration for Home Assistant allows you to send SMS messages using
 
 ## Prerequisites
 
-- **GoTo Authentication Package**: This integration uses the [GoTo Authentication library](https://github.com/oneofthegeeks/GoTo-Authentication) (installed automatically from GitHub)
+- **GoTo Authentication Package**: This integration uses the [GoTo Authentication library](https://github.com/oneofthegeeks/GoTo-Authentication)
 - **GoTo Account**: You need a GoTo account with SMS capabilities and API access
 - **GoTo API Credentials**: You'll need your API Key, API Secret, and Account SID
 
@@ -23,18 +23,26 @@ This custom integration for Home Assistant allows you to send SMS messages using
 
 1. Download this repository
 2. Copy the `custom_components/sms_goto` folder to your Home Assistant `config/custom_components/` directory
-3. Restart Home Assistant (the GoTo Authentication package will be installed automatically)
-4. Go to **Settings** > **Devices & Services** > **Integrations**
-5. Click **Add Integration** and search for "SMS GoTo"
-6. Follow the configuration steps
+3. Install the GoTo Authentication package:
+   ```bash
+   pip install git+https://github.com/oneofthegeeks/GoTo-Authentication.git
+   ```
+4. Restart Home Assistant
+5. Go to **Settings** > **Devices & Services** > **Integrations**
+6. Click **Add Integration** and search for "SMS GoTo"
+7. Follow the configuration steps
 
 ### Method 2: HACS Installation (Recommended)
 
 1. Install [HACS](https://hacs.xyz/) if you haven't already
 2. Add this repository as a custom repository in HACS
 3. Install the integration through HACS
-4. Restart Home Assistant (the GoTo Authentication package will be installed automatically)
-5. Configure the integration through the UI
+4. Install the GoTo Authentication package:
+   ```bash
+   pip install git+https://github.com/oneofthegeeks/GoTo-Authentication.git
+   ```
+5. Restart Home Assistant
+6. Configure the integration through the UI
 
 ## Configuration
 
@@ -162,8 +170,7 @@ The integration will automatically:
 ### Common Issues
 
 1. **"GoTo Authentication package not found"**
-   - The integration will automatically install it from GitHub
-   - If it fails, you may need to install git on your system
+   - Install the package manually: `pip install git+https://github.com/oneofthegeeks/GoTo-Authentication.git`
    - Restart Home Assistant after installation
 
 2. **"Failed to connect to GoTo API"**

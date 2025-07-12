@@ -1,8 +1,6 @@
 """SMS GoTo Integration for Home Assistant."""
 import asyncio
 import logging
-import subprocess
-import sys
 from typing import Any, Dict, Optional
 
 import voluptuous as vol
@@ -46,38 +44,14 @@ SERVICE_SEND_SMS_SCHEMA = vol.Schema(
 )
 
 
-def install_goto_auth():
-    """Install the GoTo Authentication package from GitHub if not available."""
-    try:
-        import gotoconnect_auth
-        return True
-    except ImportError:
-        _LOGGER.info("GoTo Authentication package not found. Installing from GitHub...")
-        try:
-            subprocess.check_call([
-                sys.executable, "-m", "pip", "install", 
-                "git+https://github.com/oneofthegeeks/GoTo-Authentication.git"
-            ])
-            _LOGGER.info("GoTo Authentication package installed successfully")
-            return True
-        except subprocess.CalledProcessError as e:
-            _LOGGER.error("Failed to install GoTo Authentication package: %s", e)
-            return False
-
-
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up the SMS GoTo component."""
     if DOMAIN not in config:
         return True
 
-    # Install GoTo Authentication package if needed
-    if not install_goto_auth():
-        _LOGGER.error("Failed to install required dependencies")
-        return False
-
     hass.data.setdefault(DOMAIN, {})
 
-    # Import SMS client after ensuring dependencies are installed
+    # Import SMS client
     from .sms_client import SMSGoToClient
 
     # Create client
@@ -122,14 +96,9 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up SMS GoTo from a config entry."""
-    # Install GoTo Authentication package if needed
-    if not install_goto_auth():
-        _LOGGER.error("Failed to install required dependencies")
-        return False
-
     hass.data.setdefault(DOMAIN, {})
 
-    # Import SMS client after ensuring dependencies are installed
+    # Import SMS client
     from .sms_client import SMSGoToClient
 
     # Create client

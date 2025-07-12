@@ -2,7 +2,5 @@
     "name": "SMS GoTo",
     "render_readme": true,
     "domains": ["notify", "sms_goto"],
-    "homeassistant": "2023.8.0",
-    "iot_class": "Cloud Polling",
-    "repository": "https://github.com/oneofthegeeks/HA-SMS"
+    "homeassistant": "2023.8.0"
 } 
