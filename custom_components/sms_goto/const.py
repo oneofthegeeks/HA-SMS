@@ -1,6 +1,6 @@
 """Constants for the SMS GoTo integration."""
 
-DOMAIN = "smsgoto"
+DOMAIN = "sms_goto"
 
 # Configuration keys
 CONF_API_KEY = "api_key"
