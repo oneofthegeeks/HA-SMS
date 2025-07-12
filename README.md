@@ -22,7 +22,7 @@ This custom integration for Home Assistant allows you to send SMS messages using
 ### Method 1: Manual Installation
 
 1. Download this repository
-2. Copy the `custom_components/sms_goto` folder to your Home Assistant `config/custom_components/` directory
+2. Copy the `custom_components/smsgoto` folder to your Home Assistant `config/custom_components/` directory
 3. Install the GoTo Authentication package:
    ```bash
    pip install git+https://github.com/oneofthegeeks/GoTo-Authentication.git
@@ -72,10 +72,10 @@ The integration will test the connection using the GoTo Authentication package a
 
 ### Service Call
 
-You can send SMS messages using the `sms_goto.send_sms` service:
+You can send SMS messages using the `smsgoto.send_sms` service:
 
 ```yaml
-service: sms_goto.send_sms
+service: smsgoto.send_sms
 data:
   to: "+1234567890"
   message: "Hello from Home Assistant!"
@@ -94,7 +94,7 @@ automation:
       entity_id: sensor.motion_detector
       to: "on"
     action:
-      service: notify.sms_goto
+      service: notify.smsgoto
       data:
         target: "+1234567890"
         message: "Motion detected in your home!"
@@ -114,7 +114,7 @@ automation:
       entity_id: binary_sensor.front_door
       to: "on"
     action:
-      service: sms_goto.send_sms
+      service: smsgoto.send_sms
       data:
         to: "+1234567890"
         message: "Front door has been opened!"
@@ -130,7 +130,7 @@ automation:
       entity_id: sensor.living_room_temperature
       above: 80
     action:
-      service: sms_goto.send_sms
+      service: smsgoto.send_sms
       data:
         to: "+1234567890"
         message: "Temperature alert: {{ states('sensor.living_room_temperature') }}°F in living room"
@@ -145,7 +145,7 @@ automation:
       platform: time
       at: "08:00:00"
     action:
-      service: sms_goto.send_sms
+      service: smsgoto.send_sms
       data:
         to: "+1234567890"
         message: "Good morning! Don't forget to check your Home Assistant dashboard."
@@ -193,7 +193,7 @@ Check the Home Assistant logs for detailed error messages:
 
 ```yaml
 logger:
-  custom_components.sms_goto: debug
+  custom_components.smsgoto: debug
 ```
 
 ## Development
