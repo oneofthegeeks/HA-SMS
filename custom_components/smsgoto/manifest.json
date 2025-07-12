@@ -1,5 +1,5 @@
 {
-    "domain": "sms_goto",
+    "domain": "smsgoto",
     "name": "SMS GoTo",
     "documentation": "https://github.com/oneofthegeeks/HA-SMS",
     "dependencies": [],
