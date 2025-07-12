@@ -22,6 +22,9 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
+# Enable debug logging for troubleshooting
+logging.getLogger("custom_components.smsgoto").setLevel(logging.DEBUG)
+
 CONFIG_SCHEMA = vol.Schema(
     {
         DOMAIN: vol.Schema(

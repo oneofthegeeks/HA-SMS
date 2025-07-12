@@ -50,8 +50,13 @@ class EmbeddedGoToAuth:
                 "Accept": "application/json"
             }
             
+            _LOGGER.debug("Attempting authentication with client_id: %s", self.client_id[:8] + "...")
+            _LOGGER.debug("Token URL: %s", GOTO_TOKEN_URL)
+            
             # Get access token
             async with session.post(GOTO_TOKEN_URL, data=auth_data, headers=headers) as response:
+                _LOGGER.debug("Authentication response status: %s", response.status)
+                
                 if response.status == 200:
                     token_data = await response.json()
                     self.access_token = token_data.get("access_token")
@@ -59,10 +64,12 @@ class EmbeddedGoToAuth:
                     self.token_expires_at = time.time() + expires_in - 300  # 5 min buffer
                     
                     _LOGGER.info("Successfully authenticated with GoTo API")
+                    _LOGGER.debug("Token expires in: %s seconds", expires_in)
                     return True
                 else:
                     error_text = await response.text()
                     _LOGGER.error("Authentication failed: %s - %s", response.status, error_text)
+                    _LOGGER.debug("Request data: %s", auth_data)
                     return False
                     
         except Exception as ex:
@@ -128,6 +135,7 @@ class SMSGoToClient:
     async def _get_auth_client(self) -> EmbeddedGoToAuth:
         """Get or create the embedded authentication client."""
         if self._auth_client is None:
+            _LOGGER.debug("Creating new authentication client")
             self._auth_client = EmbeddedGoToAuth(
                 client_id=self.api_key,
                 client_secret=self.api_secret,
@@ -159,6 +167,7 @@ class SMSGoToClient:
     async def test_connection(self) -> bool:
         """Test the connection to GoTo API."""
         try:
+            _LOGGER.debug("Testing connection to GoTo API")
             auth_client = await self._get_auth_client()
             
             # Test by making a simple API call to get user info
