@@ -1,0 +1,5 @@
+{
+    "name": "SMS GoTo",
+    "render_readme": true,
+    "domains": ["notify", "sms_goto"]
+} 
