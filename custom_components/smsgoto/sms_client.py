@@ -9,9 +9,10 @@ import aiohttp
 
 _LOGGER = logging.getLogger(__name__)
 
-# GoTo SMS API endpoint
+# GoTo API endpoints
 GOTO_SMS_URL = "https://api.goto.com/rest/sms/v1/messages"
 GOTO_TOKEN_URL = "https://authentication.logmeininc.com/oauth/token"
+GOTO_USER_INFO_URL = "https://api.goto.com/rest/users/v1/users/me"
 
 
 class EmbeddedGoToAuth:
@@ -36,22 +37,28 @@ class EmbeddedGoToAuth:
         try:
             session = await self._get_session()
             
-            # Prepare authentication data
+            # Prepare authentication data for client credentials flow
             auth_data = {
                 "grant_type": "client_credentials",
                 "client_id": self.client_id,
                 "client_secret": self.client_secret,
             }
             
+            # Set headers for form data
+            headers = {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": "application/json"
+            }
+            
             # Get access token
-            async with session.post(GOTO_TOKEN_URL, data=auth_data) as response:
+            async with session.post(GOTO_TOKEN_URL, data=auth_data, headers=headers) as response:
                 if response.status == 200:
                     token_data = await response.json()
                     self.access_token = token_data.get("access_token")
                     expires_in = token_data.get("expires_in", 3600)
                     self.token_expires_at = time.time() + expires_in - 300  # 5 min buffer
                     
-                    _LOGGER.info("Successfully authenticated with GoTo")
+                    _LOGGER.info("Successfully authenticated with GoTo API")
                     return True
                 else:
                     error_text = await response.text()
@@ -76,6 +83,7 @@ class EmbeddedGoToAuth:
         session = await self._get_session()
         headers = kwargs.get("headers", {})
         headers["Authorization"] = f"Bearer {self.access_token}"
+        headers["Accept"] = "application/json"
         kwargs["headers"] = headers
         
         return await session.get(url, **kwargs)
@@ -88,6 +96,8 @@ class EmbeddedGoToAuth:
         session = await self._get_session()
         headers = kwargs.get("headers", {})
         headers["Authorization"] = f"Bearer {self.access_token}"
+        headers["Accept"] = "application/json"
+        headers["Content-Type"] = "application/json"
         kwargs["headers"] = headers
         
         return await session.post(url, **kwargs)
@@ -151,14 +161,16 @@ class SMSGoToClient:
         try:
             auth_client = await self._get_auth_client()
             
-            # Test by making a simple API call
-            response = await auth_client.get("https://api.goto.com/rest/users/v1/users/me")
+            # Test by making a simple API call to get user info
+            response = await auth_client.get(GOTO_USER_INFO_URL)
             
             if response.status == 200:
-                _LOGGER.info("Successfully authenticated with GoTo API")
+                user_data = await response.json()
+                _LOGGER.info("Successfully authenticated with GoTo API. User: %s", user_data.get("email", "Unknown"))
                 return True
             else:
-                _LOGGER.error("Authentication test failed: %s", response.status)
+                error_text = await response.text()
+                _LOGGER.error("Authentication test failed: %s - %s", response.status, error_text)
                 return False
                 
         except Exception as ex:
@@ -183,12 +195,18 @@ class SMSGoToClient:
             sms_data = {
                 "to": validated_to,
                 "message": message,
-                "account_sid": self.account_sid,
             }
             
+            # Add account_sid if provided
+            if self.account_sid:
+                sms_data["account_sid"] = self.account_sid
+            
+            # Add from_number if provided
             if from_number:
                 validated_from = self._validate_phone_number(from_number)
                 sms_data["from"] = validated_from
+            
+            _LOGGER.debug("Sending SMS with data: %s", sms_data)
             
             # Send SMS using the authenticated client
             response = await auth_client.post(

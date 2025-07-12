@@ -6,9 +6,9 @@
                     "name": "Integration Name",
                     "api_key": "API Key (Client ID)",
                     "api_secret": "API Secret (Client Secret)",
-                    "account_sid": "Account SID"
+                    "account_sid": "Account SID (Optional - from developer.goto.com)"
                 },
-                "description": "Enter your GoTo SMS API credentials to enable SMS notifications in Home Assistant.\n\n**Prerequisites:**\n- GoTo account with SMS capabilities\n- API credentials from your GoTo developer portal\n\n**Need help?** Check the [documentation]({docs_url}) or [setup guide]({setup_url}).",
+                "description": "Enter your GoTo SMS API credentials to enable SMS notifications in Home Assistant.\n\n**Required:**\n- API Key (Client ID) from developer.goto.com\n- API Secret (Client Secret) from developer.goto.com\n\n**Optional:**\n- Account SID (Account Key from developer.goto.com)\n\n**Need help?** Check the [documentation]({docs_url}) or [setup guide]({setup_url}).",
                 "title": "SMS GoTo Configuration"
             }
         },
