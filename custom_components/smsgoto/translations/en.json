@@ -4,30 +4,21 @@
             "user": {
                 "data": {
                     "name": "Integration Name",
-                    "api_key": "API Key (Client ID)",
-                    "api_secret": "API Secret (Client Secret)",
-                    "account_sid": "Account SID (Optional)"
+                    "api_key": "API Key",
+                    "api_secret": "API Secret",
+                    "account_sid": "Account SID"
                 },
-                "description": "Enter your GoTo API credentials. You'll be guided through the OAuth setup process.",
+                "description": "Enter your GoTo API credentials to send SMS messages.",
                 "title": "SMS GoTo Configuration"
-            },
-            "oauth_setup": {
-                "data": {
-                    "auth_code": "Authorization Code"
-                },
-                "description": "Complete the OAuth flow to authenticate with GoTo",
-                "title": "OAuth Setup"
             }
         },
         "error": {
-            "cannot_connect": "Failed to connect to GoTo API. Please check your credentials and try again.",
-            "invalid_auth": "Invalid authentication credentials. Please verify your API Key, API Secret, and Account SID.",
-            "unknown": "Unexpected error occurred. Please check the logs for more details.",
-            "oauth_failed": "OAuth authentication failed. Please check your authorization code and try again.",
-            "token_save_failed": "Failed to save authentication tokens. Please try again."
+            "cannot_connect": "Failed to connect to GoTo API. Please check your credentials.",
+            "invalid_auth": "Invalid API credentials. Please check your API key and secret.",
+            "unknown": "Unexpected error occurred. Please try again."
         },
         "abort": {
-            "already_configured": "SMS GoTo is already configured. You can only have one instance."
+            "already_configured": "Device is already configured"
         }
     },
     "options": {
