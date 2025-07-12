@@ -4,9 +4,10 @@
     "documentation": "https://github.com/oneofthegeeks/GoTo-Authentication",
     "dependencies": [],
     "codeowners": ["@your_username"],
-    "requirements": ["aiohttp>=3.8.0", "git+https://github.com/oneofthegeeks/GoTo-Authentication.git"],
+    "requirements": ["aiohttp>=3.8.0"],
     "version": "1.0.0",
     "config_flow": true,
     "iot_class": "cloud_polling",
-    "integration_type": "service"
+    "integration_type": "service",
+    "quality_scale": "silver"
 } 
