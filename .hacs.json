@@ -1,6 +1,6 @@
 {
     "name": "SMS GoTo",
     "render_readme": true,
-    "domains": ["notify", "sms_goto"],
+    "domains": ["notify", "smsgoto"],
     "homeassistant": "2023.8.0"
 } 
